@@ -3,9 +3,7 @@ package lk.ijse.ws.test1.api;
 import lk.ijse.ws.test1.data.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -28,6 +26,24 @@ public class MyRestController{
         msg.setMessage("hello World");
         msg.setDate(new Date());
         return msg;
+    }
+    @GetMapping("/api/message")
+    public Message messageBuilder(
+            @RequestParam("username")
+            String user,
+            @RequestParam("message")
+            String message) {
+        Message msg = new Message();
+        msg.setSender(user);
+        msg.setMessage(message);
+        msg.setDate(new Date());
+        return msg;
+    }
+
+    @RequestMapping(value = "/api/message", method = RequestMethod.POST)
+    public Message crateMessage(@RequestBody() Message message){
+        System.out.println(message);
+        return message;
     }
 }
 
